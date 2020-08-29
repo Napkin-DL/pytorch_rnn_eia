@@ -14,10 +14,6 @@ JSON_CONTENT_TYPE = 'application/json'
  
 logger = logging.getLogger(__name__)
 
-
-ntokens = None
-
-
 def model_fn(model_dir):
     """
     This function is called by the Pytorch container during hosting when running on SageMaker with
@@ -66,13 +62,15 @@ def input_fn(serialized_input_data, content_type=JSON_CONTENT_TYPE):
             raise Exception('\'temperature\' has to be greater or equal 1e-3')
         return input_data
     raise Exception('Requested unsupported ContentType in content_type: ' + content_type)
- 
+
+
 def output_fn(prediction_output, accept=JSON_CONTENT_TYPE):
     logger.info('Serializing the generated output.')
     if accept == JSON_CONTENT_TYPE:
         return json.dumps(prediction_output), accept
     raise Exception('Requested unsupported ContentType in Accept: ' + accept)
- 
+
+
 def predict_fn(input_data, model):
     logger.info('Generating text based on input parameters.')
 #     corpus = model['corpus']
