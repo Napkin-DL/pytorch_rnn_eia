@@ -45,12 +45,12 @@ def model_fn(model_dir):
         state_dict = torch.load(f, map_location=torch.device('cpu'))
         model.load_state_dict(state_dict)
 
-        save_dir = os.path.join(model_dir, "model.pt")
+#         save_dir = os.path.join(model_dir, "model.pt")
         
         ## temp_input size should be as a same as input size
         temp_input = torch.randint(1,(25,20))
         model = torch.jit.trace(model.eval(), (temp_input, hidden))
-        torch.jit.save(model, save_dir)
+#         torch.jit.save(model, save_dir)
  
     return model
 
